@@ -1,25 +1,19 @@
-import {useState,useEffect} from 'react';
-import {task as data} from './task'
-
-function TaskList() {
-const [task, setTask] = useState([])
-useEffect(()=>{
-    setTask(data)
-},[]
-
-)
+import { useContext } from "react";
+import TaskCard from "./TaskCard";
+import { TaskContext } from "./context/TaskContext";
+function TaskList({}) {
+  const { task } = useContext(TaskContext);
+  if (task.length === 0) {
+    return <h1 className="text-white text-4xl font-bold text-center">No se encontraron elementos</h1>;
+  }
   return (
-    <div>{console.log(task)}{
-        task.map((task,i)=>(
-            <div key={i}>
-                <h1>{task.title}</h1>
-                <p>{task.description}</p>
-            </div>
-        ))
-        
-        }
-        </div>
-  )
+    <div className="grid grid-cols-4 gap-2">
+      {console.log(task)}
+      {task.map((task, i) => (
+        <TaskCard key={task.id} task={task} />
+      ))}
+    </div>
+  );
 }
 
-export default TaskList
+export default TaskList;
